@@ -120,8 +120,10 @@ def strategy(sdk):
         sdk.sdklog('%d/%d' % (len(stock_built_base), len(stock_to_build_base)), '建立底仓股票数量')
         sdk.setGlobal('stock_position', stock_position)
 
+        if sdk.getNowDate() == '20130801':
+            print quotes
+            print quotes.keys()
         zz500_tradable = list(set(zz500_available) - set(stock_to_build_base))
-        quotes = sdk.getQuotes(zz500_tradable)
         max_high = [quotes[stock].high for stock in zz500_tradable]
         min_low = [quotes[stock].low for stock in zz500_tradable]
         sdk.setGlobal('max_high', max_high)
@@ -216,7 +218,7 @@ def strategy(sdk):
     if sdk.getNowTime() == '145500':
         base_position = sdk.getGlobal('base_position')
         stock_position = sdk.getGlobal('stock_position')
-        stock_to_clear = list(stock_position.keys())
+        stock_to_clear = [stock for stock in stock_position.keys() if stock_position[stock] != 1]
         quotes = sdk.getQuotes(stock_to_clear)
         clear_orders = []
         for stock in stock_to_clear:
@@ -237,6 +239,7 @@ def strategy(sdk):
 
 
     if sdk.getNowTime() == '150000':
+        sdk.sdklog('当日未成交订单')
         sdk.sdklog(sdk.getQueueOrders())
 
 
