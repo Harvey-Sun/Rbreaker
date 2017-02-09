@@ -120,9 +120,6 @@ def strategy(sdk):
         sdk.sdklog('%d/%d' % (len(stock_built_base), len(stock_to_build_base)), '建立底仓股票数量')
         sdk.setGlobal('stock_position', stock_position)
 
-        if sdk.getNowDate() == '20130801':
-            print quotes
-            print quotes.keys()
         zz500_tradable = list(set(zz500_available) - set(stock_to_build_base))
         max_high = [quotes[stock].high for stock in zz500_tradable]
         min_low = [quotes[stock].low for stock in zz500_tradable]
@@ -132,7 +129,6 @@ def strategy(sdk):
     if (sdk.getNowTime() >= '093000') & (sdk.getNowTime() <= '145500'):
         # 获取仓位信息及有仓位的股票
         positions = sdk.getPositions()
-        position_dict = dict([[i.code, i.optPosition] for i in positions])
         # 有底仓的股票
         stock_position = sdk.getGlobal('stock_position')
         base_position = sdk.getGlobal('base_position')
