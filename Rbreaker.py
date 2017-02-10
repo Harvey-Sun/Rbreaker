@@ -127,8 +127,6 @@ def strategy(sdk):
         sdk.setGlobal('min_low', min_low)
 
     if (sdk.getNowTime() >= '093000') & (sdk.getNowTime() <= '145500'):
-        # 获取仓位信息及有仓位的股票
-        positions = sdk.getPositions()
         # 有底仓的股票
         stock_position = sdk.getGlobal('stock_position')
         base_position = sdk.getGlobal('base_position')
